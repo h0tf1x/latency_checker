@@ -1,0 +1,20 @@
+{
+  "name": "testtask",
+  "version": "1.0.0",
+  "description": "Test task for AgileNix",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "XFix",
+  "license": "MIT",
+  "dependencies": {
+    "hapi": "^17.8.1",
+    "hapi-auth-bearer-token": "^6.1.1",
+    "joi": "^14.3.0",
+    "joi-phone-number": "^2.1.0",
+    "moment": "^2.22.2",
+    "mongoose": "^5.3.15",
+    "tcp-ping": "^0.1.1"
+  }
+}
