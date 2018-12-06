@@ -166,8 +166,7 @@ const start = async () => {
         validate: async (request, token) => {
             let accessToken = await AccessToken.findOne({
                 token: token,
-                expires: { $gt: new Date() 
-                }
+                expires: { $gt: new Date() }
             }).populate('user').exec()
             return { isValid: accessToken !== null, credentials: accessToken, artifacts: {} }
         }
