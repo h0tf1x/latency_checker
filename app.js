@@ -6,6 +6,8 @@ const Joi = require('joi').extend(require('joi-phone-number'))
 const moment = require('moment')
 const tcpping = require('tcp-ping')
 
+const TOKEN_TTL = 10
+
 /* User model */
 const User = mongoose.model('User', {
     login: { type: String, index: { unique: true } },
@@ -32,7 +34,7 @@ const createToken = async (user) => {
     let expirationDate = moment().add(10, 'm').toDate()
     let token = new AccessToken({
         token: ecnryptString(`${user.login}${user.password}${expirationDate}`),
-        expires: moment().add(10, 'm').toDate(),
+        expires: moment().add(TOKEN_TTL, 'm').toDate(),
         user: user._id
     })
     await token.save()
@@ -168,6 +170,8 @@ const start = async () => {
                 token: token,
                 expires: { $gt: new Date() }
             }).populate('user').exec()
+            accessToken.expires = moment().add(TOKEN_TTL, 'm').toDate()
+            await accessToken.save()
             return { isValid: accessToken !== null, credentials: accessToken, artifacts: {} }
         }
     })
